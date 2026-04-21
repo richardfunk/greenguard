@@ -46,9 +46,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
+
 app.UseCors("AngularClient");
 
-app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllers();
