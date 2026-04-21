@@ -1,0 +1,8 @@
+/webapi/obj
+/webapi/bin
+/.idea
+/webapi.Tests/bin
+/webapi.Tests/obj
+/webapi/.idea
+.DS_Store
+*.user

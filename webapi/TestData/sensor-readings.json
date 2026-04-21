@@ -1,0 +1,106 @@
+# Test sensor data objects for manual testing.
+[
+  [
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1001, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.1, "humidity": 61.3, "co2Ppm": 582 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1002, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.8, "humidity": 62.0, "co2Ppm": 595 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1003, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.4, "humidity": 60.7, "co2Ppm": 611 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1004, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.0, "humidity": 61.8, "co2Ppm": 574 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1005, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.6, "humidity": 63.1, "co2Ppm": 608 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1006, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.3, "humidity": 59.4, "co2Ppm": 590 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1007, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.9, "humidity": 62.5, "co2Ppm": 623 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1008, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.2, "humidity": 61.0, "co2Ppm": 599 }
+  ],
+  [
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1009, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.6, "humidity": 60.2, "co2Ppm": 617 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1010, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.7, "humidity": 63.8, "co2Ppm": 585 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1011, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.5, "humidity": 61.4, "co2Ppm": 604 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1012, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.1, "humidity": 59.9, "co2Ppm": 632 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1013, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.4, "humidity": 64.2, "co2Ppm": 578 }
+  ],
+  [
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1014, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.3, "humidity": 62.7, "co2Ppm": 591 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1015, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.8, "humidity": 61.1, "co2Ppm": 615 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1016, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.7, "humidity": 60.5, "co2Ppm": 603 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1017, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.0, "humidity": 62.3, "co2Ppm": 588 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1018, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.5, "humidity": 63.0, "co2Ppm": 627 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1019, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.4, "humidity": 61.7, "co2Ppm": 596 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1020, "timestamp": "0001-01-01T00:00:00Z", "temperature": 38.7, "humidity": 62.1, "co2Ppm": 601 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1021, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.2, "humidity": 60.8, "co2Ppm": 619 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1022, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.9, "humidity": 63.4, "co2Ppm": 584 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1023, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.6, "humidity": 61.5, "co2Ppm": 610 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1024, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.6, "humidity": 62.9, "co2Ppm": 593 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1025, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.1, "humidity": 60.3, "co2Ppm": 638 }
+  ],
+  [
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1026, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.8, "humidity": 61.9, "co2Ppm": 607 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1027, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.3, "humidity": 64.6, "co2Ppm": 577 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1028, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.0, "humidity": 60.1, "co2Ppm": 622 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1029, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.5, "humidity": 62.4, "co2Ppm": 589 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1030, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.7, "humidity": 63.7, "co2Ppm": 614 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1031, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.3, "humidity": 61.2, "co2Ppm": 601 }
+  ],
+  [
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1032, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.1, "humidity": 62.0, "co2Ppm": 595 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1033, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.9, "humidity": 61.6, "co2Ppm": 618 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1034, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.4, "humidity": 60.4, "co2Ppm": 583 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1035, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.0, "humidity": 63.2, "co2Ppm": 609 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1036, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.6, "humidity": 62.8, "co2Ppm": 631 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1037, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.7, "humidity": 60.9, "co2Ppm": 597 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1038, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.2, "humidity": 93.4, "co2Ppm": 604 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1039, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.8, "humidity": 61.3, "co2Ppm": 588 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1040, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.3, "humidity": 62.5, "co2Ppm": 621 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1041, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.5, "humidity": 63.9, "co2Ppm": 576 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1042, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.6, "humidity": 60.6, "co2Ppm": 613 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1043, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.1, "humidity": 62.2, "co2Ppm": 1842 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1044, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.7, "humidity": 61.8, "co2Ppm": 605 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1045, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.5, "humidity": 60.0, "co2Ppm": 594 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1046, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.0, "humidity": 63.5, "co2Ppm": 628 }
+  ],
+  [
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1047, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.4, "humidity": 62.6, "co2Ppm": 591 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1048, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.8, "humidity": 61.0, "co2Ppm": 616 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1049, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.2, "humidity": 63.3, "co2Ppm": 580 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1050, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.9, "humidity": 60.7, "co2Ppm": 609 }
+  ],
+  [
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1051, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.4, "humidity": 62.1, "co2Ppm": 598 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1052, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.6, "humidity": 63.6, "co2Ppm": 625 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1053, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.1, "humidity": 60.3, "co2Ppm": 587 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1054, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.6, "humidity": 61.7, "co2Ppm": 611 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1055, "timestamp": "0001-01-01T00:00:00Z", "temperature": 4.2,  "humidity": 62.4, "co2Ppm": 603 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1056, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.8, "humidity": 63.0, "co2Ppm": 594 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1057, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.3, "humidity": 60.8, "co2Ppm": 619 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1058, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.5, "humidity": 62.9, "co2Ppm": 582 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1059, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.0, "humidity": 61.4, "co2Ppm": 607 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1060, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.7, "humidity": 60.1, "co2Ppm": 636 }
+  ],
+  [
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1061, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.9, "humidity": 63.8, "co2Ppm": 573 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1062, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.4, "humidity": 62.0, "co2Ppm": 615 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1063, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.7, "humidity": 61.3, "co2Ppm": 598 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1064, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.1, "humidity": 62.7, "co2Ppm": 2105 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1065, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.5, "humidity": 60.5, "co2Ppm": 610 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1066, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.3, "humidity": 64.1, "co2Ppm": 583 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1067, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.2, "humidity": 61.8, "co2Ppm": 627 }
+  ],
+  [
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1068, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.8, "humidity": 62.3, "co2Ppm": 595 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1069, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.6, "humidity": 60.9, "co2Ppm": 618 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1070, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.4, "humidity": 63.4, "co2Ppm": 581 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1071, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.0, "humidity": 61.7, "co2Ppm": 608 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1072, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.3, "humidity": 62.6, "co2Ppm": 592 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1073, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.7, "humidity": 11.8, "co2Ppm": 622 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1074, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.5, "humidity": 61.1, "co2Ppm": 599 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1075, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.6, "humidity": 63.7, "co2Ppm": 614 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1076, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.2, "humidity": 60.4, "co2Ppm": 587 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1077, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.9, "humidity": 62.8, "co2Ppm": 631 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1078, "timestamp": "0001-01-01T00:00:00Z", "temperature": 41.2, "humidity": 61.5, "co2Ppm": 604 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1079, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.4, "humidity": 60.2, "co2Ppm": 616 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1080, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.8, "humidity": 63.1, "co2Ppm": 579 }
+  ],
+  [
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1081, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.1, "humidity": 62.0, "co2Ppm": 610 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1082, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.0, "humidity": 61.4, "co2Ppm": 1975 },
+    { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1083, "timestamp": "0001-01-01T00:00:00Z", "temperature": 21.7, "humidity": 62.9, "co2Ppm": 597 }
+  ]
+]
