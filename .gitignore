@@ -6,3 +6,11 @@
 /webapi/.idea
 .DS_Store
 *.user
+/api/webapi.Tests/bin
+/api/webapi.Tests/obj
+/api/webapi/.idea
+/api/webapi/bin
+/api/webapi/obj
+/ui/.angular
+/ui/node_modules
+/api/.idea

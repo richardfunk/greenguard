@@ -1,0 +1,40 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <div
+    *ngIf="vm.visible"
+    class="queue-badge"
+    [ngClass]="vm.status"
+    [title]="vm.tooltip"
+    role="status"
+    [attr.aria-label]="vm.tooltip">
+
+    <!-- Spinner shown while flushing -->
+    <span *ngIf="vm.status === 'flushing'" class="spinner" aria-hidden="true"></span>
+
+    <!-- Queue icon shown when idle/error -->
+    <svg *ngIf="vm.status !== 'flushing'" class="queue-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <rect x="2" y="3"  width="12" height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="7"  width="9"  height="2" rx="1" fill="currentColor"/>
+      <rect x="2" y="11" width="6"  height="2" rx="1" fill="currentColor"/>
+    </svg>
+
+    <span class="queue-label">{{ vm.label }}</span>
+
+    <!-- Action buttons -->
+    <ng-container *ngIf="vm.status !== 'flushing'">
+      <button
+        class="queue-action"
+        (click)="onRetryNow()"
+        title="Retry now"
+        aria-label="Retry sending queued readings now">
+        ↑
+      </button>
+      <button
+        class="queue-action discard"
+        (click)="onClearQueue()"
+        title="Discard queue"
+        aria-label="Discard all queued readings">
+        ✕
+      </button>
+    </ng-container>
+  </div>
+</ng-container>

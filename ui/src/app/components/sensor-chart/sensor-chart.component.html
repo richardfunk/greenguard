@@ -1,0 +1,24 @@
+<div class="chart-panel">
+  <div class="chart-header">
+    <span class="chart-title">Last 20 readings</span>
+    <div class="chart-tabs" role="tablist">
+      <button
+        *ngFor="let tab of tabs"
+        class="chart-tab"
+        role="tab"
+        [class.active]="activeTab.channel === tab.channel"
+        [attr.aria-selected]="activeTab.channel === tab.channel"
+        (click)="setTab(tab)">
+        {{ tab.label }}
+      </button>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <canvas #chartCanvas
+      role="img"
+      [attr.aria-label]="activeTab.label + ' line chart showing last 20 readings'">
+      {{ activeTab.label }} readings chart
+    </canvas>
+  </div>
+</div>

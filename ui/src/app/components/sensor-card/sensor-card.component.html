@@ -1,0 +1,29 @@
+<div class="sensor-card" [ngClass]="status" role="region" [attr.aria-label]="label + ' sensor reading'">
+  <div class="card-accent" aria-hidden="true"></div>
+
+  <div class="card-header">
+    <span class="card-label">{{ label }}</span>
+    <span class="card-icon" aria-hidden="true">{{ icon }}</span>
+  </div>
+
+  <div class="card-value-row">
+    <span class="card-value" [ngClass]="status">{{ displayValue }}</span>
+    <span class="card-unit">{{ unit }}</span>
+  </div>
+
+  <div class="card-footer">
+    <span class="card-status-pill" [ngClass]="status">{{ statusLabel }}</span>
+    <span class="card-zscore" *ngIf="zScore > 0">
+      z={{ zScore.toFixed(2) }}
+    </span>
+  </div>
+
+  <div class="card-sparkline">
+    <canvas #sparkCanvas
+      width="220"
+      height="40"
+      role="img"
+      [attr.aria-label]="label + ' history sparkline'">
+    </canvas>
+  </div>
+</div>

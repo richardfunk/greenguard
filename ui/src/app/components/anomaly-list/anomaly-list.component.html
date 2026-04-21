@@ -1,0 +1,34 @@
+<div class="anomaly-panel">
+  <div class="anomaly-header">
+    <span class="anomaly-title">Anomaly events</span>
+    <span class="anomaly-count">{{ anomalies.length }} detected</span>
+  </div>
+
+  <div class="anomaly-col-headers" aria-hidden="true">
+    <span>Time</span>
+    <span>Sensor</span>
+    <span>Value</span>
+    <span>Reason</span>
+  </div>
+
+  <div class="anomaly-list" #listEl role="log" aria-live="polite" aria-label="Anomaly event log">
+    <div
+      *ngIf="anomalies.length === 0"
+      class="anomaly-empty">
+      No anomalies detected yet
+    </div>
+
+    <div
+      *ngFor="let anomaly of anomalies; trackBy: trackByAnomaly"
+      class="anomaly-item"
+      [class.newest]="anomaly.id === newestId"
+      role="listitem">
+      <span class="anomaly-time mono">{{ formatTime(anomaly.detectedAt) }}</span>
+      <span class="anomaly-sensor" [ngClass]="sensorClass(anomaly.sensorType)">
+        {{ anomaly.sensorType }}
+      </span>
+      <span class="anomaly-value mono">{{ formatValue(anomaly) }}</span>
+      <span class="anomaly-reason">{{ anomaly.reason }}</span>
+    </div>
+  </div>
+</div>

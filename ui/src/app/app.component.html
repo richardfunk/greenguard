@@ -1,0 +1,57 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <app-header
+    [connectionStatus]="vm.connectionStatus"
+    [lastUpdated]="vm.lastUpdated">
+  </app-header>
+
+  <main class="dashboard" role="main">
+    <!-- Offline queue flush banner — shown only when items are pending -->
+    <div
+      *ngIf="vm.pendingCount > 0"
+      class="queue-banner"
+      role="alert">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M8 2a6 6 0 100 12A6 6 0 008 2zm0 3v3.5l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span>
+        <strong>{{ vm.pendingCount }}</strong>
+        {{ vm.pendingCount === 1 ? 'reading is' : 'readings are' }}
+        queued offline and will sync automatically when the connection is restored.
+      </span>
+    </div>
+
+    <section class="sensor-grid" aria-label="Sensor readings">
+      <app-sensor-card
+        channel="temperature"
+        [value]="vm.temperatureValue"
+        [status]="vm.temperatureStatus"
+        [history]="vm.temperatureHistory"
+        [zScore]="vm.temperatureZScore">
+      </app-sensor-card>
+
+      <app-sensor-card
+        channel="humidity"
+        [value]="vm.humidityValue"
+        [status]="vm.humidityStatus"
+        [history]="vm.humidityHistory"
+        [zScore]="vm.humidityZScore">
+      </app-sensor-card>
+
+      <app-sensor-card
+        channel="co2"
+        [value]="vm.co2Value"
+        [status]="vm.co2Status"
+        [history]="vm.co2History"
+        [zScore]="vm.co2ZScore">
+      </app-sensor-card>
+    </section>
+
+    <section class="chart-section" aria-label="Sensor history chart">
+      <app-sensor-chart [readings]="vm.readings"></app-sensor-chart>
+    </section>
+
+    <section class="anomaly-section" aria-label="Anomaly events">
+      <app-anomaly-list [anomalies]="vm.anomalies"></app-anomaly-list>
+    </section>
+  </main>
+</ng-container>

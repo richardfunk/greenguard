@@ -1,0 +1,25 @@
+<header class="header">
+  <div class="header-left">
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2C8 2 4 6 4 11c0 5.5 8 13 8 13s8-7.5 8-13c0-5-4-9-8-9z"/>
+        <circle cx="12" cy="11" r="2.5"/>
+      </svg>
+    </div>
+    <h1 class="title">Greenhouse Monitor</h1>
+  </div>
+
+  <div class="header-right">
+    <span class="last-update" aria-label="Last updated at">
+      Updated {{ formattedTime }}
+    </span>
+
+    <!-- Offline queue badge — only visible when items are queued or flushing -->
+    <app-queue-badge></app-queue-badge>
+
+    <div class="status-badge" [ngClass]="connectionStatus" role="status" [attr.aria-label]="'Connection status: ' + statusLabel">
+      <span class="pulse-dot" [class.live]="isLive" aria-hidden="true"></span>
+      <span class="status-text">{{ statusLabel }}</span>
+    </div>
+  </div>
+</header>

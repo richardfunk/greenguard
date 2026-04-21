@@ -1,0 +1,84 @@
+.queue-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+
+  // Default: items pending
+  background: var(--amber-50);
+  color: var(--amber-600);
+  border-color: var(--amber-200);
+
+  &.flushing {
+    background: var(--teal-50);
+    color: var(--teal-600);
+    border-color: var(--teal-200);
+  }
+
+  &.error {
+    background: var(--red-50);
+    color: var(--red-600);
+    border-color: var(--red-200);
+  }
+}
+
+.queue-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.queue-label {
+  letter-spacing: 0.3px;
+}
+
+.queue-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  font-size: 11px;
+  line-height: 1;
+  border-radius: 3px;
+  opacity: 0.65;
+  transition: opacity 0.15s, background 0.15s;
+
+  &:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.07);
+  }
+
+  &.discard:hover {
+    color: var(--red-600);
+    background: var(--red-50);
+  }
+}
+
+// Spinning circle for flush in progress
+.spinner {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
