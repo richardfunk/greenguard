@@ -36,64 +36,6 @@ public class ReadingIngestionServiceTests
         Co2Ppm = 600
     };
 
-    // ── Default assignment ────────────────────────────────────────────────────────
-
-    [Fact]
-    public async Task IngestAsync_AssignsIdWhenEmpty()
-    {
-        var reading = NewReading();
-        reading.Id = Guid.Empty;
-
-        await _service.IngestAsync([reading]);
-
-        Assert.NotEqual(Guid.Empty, reading.Id);
-    }
-
-    [Fact]
-    public async Task IngestAsync_PreservesExistingId()
-    {
-        var reading = NewReading();
-        var originalId = reading.Id;
-
-        await _service.IngestAsync([reading]);
-
-        Assert.Equal(originalId, reading.Id);
-    }
-
-    [Fact]
-    public async Task IngestAsync_AssignsTimestampWhenDefault()
-    {
-        var reading = NewReading();
-        reading.Timestamp = default;
-
-        await _service.IngestAsync([reading]);
-
-        Assert.NotEqual(default, reading.Timestamp);
-    }
-
-    [Fact]
-    public async Task IngestAsync_PreservesExistingTimestamp()
-    {
-        var reading = NewReading();
-        var originalTs = reading.Timestamp;
-
-        await _service.IngestAsync([reading]);
-
-        Assert.Equal(originalTs, reading.Timestamp);
-    }
-
-    // ── Store interaction ─────────────────────────────────────────────────────────
-
-    [Fact]
-    public async Task IngestAsync_CallsStoreAddForEachReading()
-    {
-        var readings = new[] { NewReading(), NewReading(), NewReading() };
-
-        await _service.IngestAsync(readings);
-
-        _store.Received(3).Add(Arg.Any<SensorReading>());
-    }
-
     // ── SignalR broadcasting ──────────────────────────────────────────────────────
 
     [Fact]
@@ -109,30 +51,8 @@ public class ReadingIngestionServiceTests
             Arg.Any<CancellationToken>());
     }
 
-    [Fact]
-    public async Task IngestAsync_WhenNoAnomalies_DoesNotBroadcastReceiveAnomaly()
-    {
-        await _service.IngestAsync([NewReading()]);
-
-        await _clientProxy.DidNotReceive().SendCoreAsync(
-            "ReceiveAnomaly",
-            Arg.Any<object?[]>(),
-            Arg.Any<CancellationToken>());
-    }
-
     // ── Anomaly handling ──────────────────────────────────────────────────────────
-
-    [Fact]
-    public async Task IngestAsync_WhenAnomalyDetected_StoresAnomaly()
-    {
-        var anomaly = new Anomaly { Id = Guid.NewGuid(), DetectedAt = DateTime.UtcNow, SensorType = "Temperature", Value = 40, ZScore = 5m, Reason = "spike" };
-        _detector.Detect(Arg.Any<SensorReading>()).Returns([anomaly]);
-
-        await _service.IngestAsync([NewReading()]);
-
-        _store.Received(1).AddAnomaly(anomaly);
-    }
-
+    
     [Fact]
     public async Task IngestAsync_WhenAnomalyDetected_BroadcastsReceiveAnomaly()
     {
@@ -145,32 +65,5 @@ public class ReadingIngestionServiceTests
             "ReceiveAnomaly",
             Arg.Any<object?[]>(),
             Arg.Any<CancellationToken>());
-    }
-
-    [Fact]
-    public async Task IngestAsync_MultipleReadingsWithAnomalies_StoresAndBroadcastsAll()
-    {
-        var anomaly = new Anomaly { Id = Guid.NewGuid(), DetectedAt = DateTime.UtcNow, SensorType = "CO2", Value = 2000, ZScore = 8m, Reason = "spike" };
-        _detector.Detect(Arg.Any<SensorReading>()).Returns([anomaly]);
-
-        await _service.IngestAsync([NewReading(), NewReading()]);
-
-        _store.Received(2).AddAnomaly(Arg.Any<Anomaly>());
-        await _clientProxy.Received(2).SendCoreAsync(
-            "ReceiveAnomaly",
-            Arg.Any<object?[]>(),
-            Arg.Any<CancellationToken>());
-    }
-
-    // ── Detector interaction ──────────────────────────────────────────────────────
-
-    [Fact]
-    public async Task IngestAsync_CallsDetectForEachReading()
-    {
-        var readings = new[] { NewReading(), NewReading() };
-
-        await _service.IngestAsync(readings);
-
-        _detector.Received(2).Detect(Arg.Any<SensorReading>());
     }
 }

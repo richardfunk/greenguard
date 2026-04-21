@@ -19,6 +19,14 @@ public class ReadingsController(IDataStore store, ReadingIngestionService ingest
         var reading = store.GetLatest();
         return reading is null ? NotFound() : Ok(reading);
     }
+    
+    [HttpGet]
+    [ProducesResponseType(typeof(SensorReading), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<SensorReading> Get()
+    {
+        return Ok(store.GetRecent(20));
+    }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]

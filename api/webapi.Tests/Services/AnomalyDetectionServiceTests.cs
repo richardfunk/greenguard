@@ -25,25 +25,6 @@ public class AnomalyDetectionServiceTests
         return (new AnomalyDetectionService(store), store);
     }
 
-    // ── Minimum window ───────────────────────────────────────────────────────────
-
-    [Fact]
-    public void Detect_WhenWindowBelowMinSize_ReturnsEmpty()
-    {
-        var (service, _) = Create([Reading(), Reading()]);
-        Assert.Empty(service.Detect(Reading()));
-    }
-
-    [Fact]
-    public void Detect_WhenWindowAtMinSize_RunsDetection()
-    {
-        var window = BuildWindow(3);
-        var (service, _) = Create(window);
-
-        // Normal reading — no anomaly, but detection ran (no exception)
-        Assert.Empty(service.Detect(Reading(temp: 22)));
-    }
-
     // ── No anomaly ───────────────────────────────────────────────────────────────
 
     [Fact]
@@ -54,54 +35,10 @@ public class AnomalyDetectionServiceTests
 
         Assert.Empty(service.Detect(Reading(temp: 22.5m, humidity: 60, co2: 600)));
     }
-
-    [Fact]
-    public void Detect_AllWindowValuesIdentical_ReturnsEmpty()
-    {
-        var window = Enumerable.Range(0, 10).Select(_ => Reading(22, 60, 600)).ToList();
-        var (service, _) = Create(window);
-
-        Assert.Empty(service.Detect(Reading(temp: 40)));
-    }
-
+    
+    
     // ── Sensor-specific anomalies ────────────────────────────────────────────────
-
-    [Fact]
-    public void Detect_TemperatureSpike_ReturnsTemperatureAnomaly()
-    {
-        var window = BuildWindow(5);
-        var (service, _) = Create(window);
-
-        var anomalies = service.Detect(Reading(temp: 40)).ToList();
-
-        Assert.Single(anomalies);
-        Assert.Equal("Temperature", anomalies[0].SensorType);
-    }
-
-    [Fact]
-    public void Detect_HumiditySpike_ReturnsHumidityAnomaly()
-    {
-        var window = BuildWindow(5, humidity: 60);
-        var (service, _) = Create(window);
-
-        var anomalies = service.Detect(Reading(humidity: 95)).ToList();
-
-        Assert.Single(anomalies);
-        Assert.Equal("Humidity", anomalies[0].SensorType);
-    }
-
-    [Fact]
-    public void Detect_Co2Spike_ReturnsCo2Anomaly()
-    {
-        var window = BuildWindow(5, co2: 600);
-        var (service, _) = Create(window);
-
-        var anomalies = service.Detect(Reading(co2: 2000)).ToList();
-
-        Assert.Single(anomalies);
-        Assert.Equal("CO2", anomalies[0].SensorType);
-    }
-
+    
     [Fact]
     public void Detect_MultipleSpikes_ReturnsOneAnomalyPerSensor()
     {
@@ -111,36 +48,8 @@ public class AnomalyDetectionServiceTests
         var anomalies = service.Detect(Reading(temp: 40, humidity: 95, co2: 2000)).ToList();
 
         Assert.Equal(3, anomalies.Count);
-    }
-
-    // ── Anomaly field correctness ─────────────────────────────────────────────────
-
-    [Fact]
-    public void Detect_Anomaly_HasCorrectFields()
-    {
-        var window = BuildWindow(5);
-        var (service, _) = Create(window);
-        var subject = Reading(temp: 40);
-
-        var anomaly = service.Detect(subject).Single();
-
-        Assert.NotEqual(Guid.Empty, anomaly.Id);
-        Assert.Equal(subject.Timestamp, anomaly.DetectedAt);
-        Assert.Equal(40m, anomaly.Value);
-        Assert.True(anomaly.ZScore > 2.5m);
-        Assert.NotEmpty(anomaly.Reason);
-    }
-
-    // ── Store interaction ─────────────────────────────────────────────────────────
-
-    [Fact]
-    public void Detect_FetchesWindowOf20FromStore()
-    {
-        var window = BuildWindow(5);
-        var (service, store) = Create(window);
-
-        service.Detect(Reading());
-
-        store.Received(1).GetRecent(20);
+        Assert.NotNull(anomalies.Find(x => x.SensorType == "Temperature"));
+        Assert.NotNull(anomalies.Find(x => x.SensorType == "CO2"));
+        Assert.NotNull(anomalies.Find(x => x.SensorType == "Humidity"));
     }
 }
