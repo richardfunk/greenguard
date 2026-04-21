@@ -14,24 +14,23 @@ npm start
 ## Project structure
 
 ```
-src/
-├── app/
-│   ├── components/
-│   │   ├── header/           # Title, connection badge, last-updated timestamp
-│   │   ├── sensor-card/      # Per-sensor card with sparkline (temp / humidity / CO₂)
-│   │   ├── sensor-chart/     # Chart.js line chart — last 20 readings, tab per sensor
-│   │   └── anomaly-list/     # Auto-scrolling list of last 10 anomaly events
-│   ├── models/
-│   │   └── models.ts         # SensorReading, Anomaly, ConnectionStatus, SensorStatus
-│   ├── services/
-│   │   ├── signalr.service.ts        # SignalR hub wrapper (sensorReading$, anomaly$, connectionStatus$)
-│   │   ├── readings-api.service.ts   # REST calls — GET latest, POST readings, GET anomalies
-│   │   └── dashboard-state.service.ts # RxJS state — rolling window, Z-score detection, card derivation
-│   ├── app.component.*       # Root component — single vm$ observable via combineLatest
-│   └── app.config.ts         # Angular providers
-└── environments/
-    ├── environment.ts         # Dev  — apiBaseUrl: http://localhost:5000
-    └── environment.prod.ts    # Prod — update apiBaseUrl before building
+app/
+  components/
+    header/                      Title, connection badge, last-updated timestamp
+    sensor-card/                 Per-sensor card with sparkline (temp / humidity / CO₂)
+    sensor-chart/                Chart.js line chart — last 20 readings, tab per sensor
+    anomaly-list/                Auto-scrolling list of last 10 anomaly events
+  models/
+    models.ts                    SensorReading, Anomaly, ConnectionStatus, SensorStatus
+  services/
+    signalr.service.ts           SignalR hub wrapper (sensorReading$, anomaly$, connectionStatus$)
+    readings-api.service.ts      REST calls — GET latest, POST readings, GET anomalies
+    dashboard-state.service.ts   RxJS state — rolling window, Z-score detection, card derivation
+  app.component.*                Root component — single vm$ observable via combineLatest
+  app.config.ts                  Angular providers
+environments/
+    environment.ts               Dev  — apiBaseUrl: http://localhost:5000
+    environment.prod.ts          Prod — update apiBaseUrl before building
 ```
 
 ## Connecting to the API
