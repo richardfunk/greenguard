@@ -18,6 +18,10 @@ export class ReadingsApiService {
     return this.http.get<SensorReading>(`${this.base}/api/readings/latest`);
   }
 
+  getReadings(): Observable<SensorReading[]> {
+    return this.http.get<SensorReading[]>(`${this.base}/api/readings`);
+  }
+
   /**
    * Post a single reading with offline-queue fallback.
    * If the request fails (network down, server unreachable) the reading

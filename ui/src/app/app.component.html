@@ -5,19 +5,43 @@
   </app-header>
 
   <main class="dashboard" role="main">
-    <!-- Offline queue flush banner — shown only when items are pending -->
+    <!-- Sync status bar — visible whenever readings are queued or a flush is active -->
     <div
-      *ngIf="vm.pendingCount > 0"
-      class="queue-banner"
-      role="alert">
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="M8 2a6 6 0 100 12A6 6 0 008 2zm0 3v3.5l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      *ngIf="vm.pendingCount > 0 || vm.flushStatus === 'flushing'"
+      class="sync-bar"
+      [class.sync-bar--flushing]="vm.flushStatus === 'flushing'"
+      [class.sync-bar--error]="vm.flushStatus === 'error'"
+      role="status"
+      [attr.aria-label]="vm.pendingCount + ' queued readings'">
+
+      <!-- Count bubble -->
+      <span class="sync-count" aria-hidden="true">{{ vm.pendingCount }}</span>
+
+      <!-- Status icon: spinner when syncing, queue icon otherwise -->
+      <span *ngIf="vm.flushStatus === 'flushing'" class="sync-spinner" aria-hidden="true"></span>
+      <svg *ngIf="vm.flushStatus !== 'flushing'" class="sync-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <rect x="2" y="3"  width="12" height="2" rx="1" fill="currentColor"/>
+        <rect x="2" y="7"  width="9"  height="2" rx="1" fill="currentColor"/>
+        <rect x="2" y="11" width="6"  height="2" rx="1" fill="currentColor"/>
       </svg>
-      <span>
-        <strong>{{ vm.pendingCount }}</strong>
-        {{ vm.pendingCount === 1 ? 'reading is' : 'readings are' }}
-        queued offline and will sync automatically when the connection is restored.
+
+      <!-- Message -->
+      <span class="sync-message">
+        <ng-container [ngSwitch]="vm.flushStatus">
+          <ng-container *ngSwitchCase="'flushing'">Syncing {{ vm.pendingCount }} queued {{ vm.pendingCount === 1 ? 'reading' : 'readings' }}…</ng-container>
+          <ng-container *ngSwitchCase="'error'">Sync failed &mdash; {{ vm.pendingCount }} {{ vm.pendingCount === 1 ? 'reading' : 'readings' }} still queued. Retrying shortly.</ng-container>
+          <ng-container *ngSwitchDefault>{{ vm.pendingCount }} {{ vm.pendingCount === 1 ? 'reading' : 'readings' }} queued — will sync on reconnect.</ng-container>
+        </ng-container>
       </span>
+
+      <!-- Retry button (not shown while already flushing) -->
+      <button
+        *ngIf="vm.flushStatus !== 'flushing'"
+        class="sync-retry"
+        (click)="retryFlush()"
+        aria-label="Retry sync now">
+        Retry now
+      </button>
     </div>
 
     <section class="sensor-grid" aria-label="Sensor readings">
@@ -25,7 +49,6 @@
         channel="temperature"
         [value]="vm.temperatureValue"
         [status]="vm.temperatureStatus"
-        [history]="vm.temperatureHistory"
         [zScore]="vm.temperatureZScore">
       </app-sensor-card>
 
@@ -33,7 +56,6 @@
         channel="humidity"
         [value]="vm.humidityValue"
         [status]="vm.humidityStatus"
-        [history]="vm.humidityHistory"
         [zScore]="vm.humidityZScore">
       </app-sensor-card>
 
@@ -41,7 +63,6 @@
         channel="co2"
         [value]="vm.co2Value"
         [status]="vm.co2Status"
-        [history]="vm.co2History"
         [zScore]="vm.co2ZScore">
       </app-sensor-card>
     </section>

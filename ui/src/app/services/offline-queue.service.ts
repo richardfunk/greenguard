@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Subscription, timer, from, EMPTY } from 'rxjs';
-import { switchMap, filter, concatMap, catchError, tap, retryWhen, delay, take } from 'rxjs/operators';
+import { BehaviorSubject, Subscription, timer, from, EMPTY, firstValueFrom } from 'rxjs';
+import { concatMap, catchError, tap } from 'rxjs/operators';
 import { SensorReading } from '../models/models';
 import { environment } from '../../environments/environment';
 
@@ -15,9 +15,9 @@ export interface QueuedReading {
 
 export type FlushStatus = 'idle' | 'flushing' | 'error';
 
-const STORAGE_KEY = 'gm_offline_queue';
-const MAX_QUEUE   = 500;
-const RETRY_DELAY = 3_000;   // ms between flush retries
+const STORAGE_KEY  = 'gm_offline_queue';
+const MAX_QUEUE    = 500;
+const RETRY_DELAY  = 3000;  // ms before auto-retry after a failed flush
 const MAX_ATTEMPTS = 10;
 
 @Injectable({ providedIn: 'root' })
@@ -47,9 +47,7 @@ export class OfflineQueueService implements OnDestroy {
    * Returns a promise that resolves once the item is either sent or queued.
    */
   send(reading: Partial<SensorReading>): Promise<void> {
-    return this.http
-      .post<{ accepted: number }>(this.postUrl, reading)
-      .toPromise()
+    return firstValueFrom(this.http.post<{ accepted: number }>(this.postUrl, reading))
       .then(() => { /* sent live — nothing to queue */ })
       .catch(() => {
         this.enqueue(reading);
@@ -60,6 +58,8 @@ export class OfflineQueueService implements OnDestroy {
    * Flush all queued readings in order, one by one.
    * Called automatically when SignalR reconnects (via `notifyOnline()`).
    * Safe to call multiple times — re-entrant calls are ignored while flushing.
+   * If items remain after the flush (network still unreliable), status is set
+   * to 'error' and a retry is automatically scheduled after RETRY_DELAY.
    */
   flush(): void {
     if (this.flushStatus$.getValue() === 'flushing') return;
@@ -69,51 +69,66 @@ export class OfflineQueueService implements OnDestroy {
 
     this.flushStatus$.next('flushing');
 
-    // Process items sequentially (concatMap) so order is preserved
-    const sub = from(queue).pipe(
-      concatMap(item =>
-        this.http.post<{ accepted: number }>(this.postUrl, item.reading).pipe(
-          tap(() => {
-            this.remove(item.queueId);
-            this.flushed$.next(item);
-          }),
-          catchError((err: HttpErrorResponse) => {
-            const updated = { ...item, attempts: item.attempts + 1 };
-            if (updated.attempts >= MAX_ATTEMPTS) {
-              // Give up on this item after too many failures
+    // Process items sequentially (concatMap) so insertion order is preserved
+    this.subs.add(
+      from(queue).pipe(
+        concatMap(item =>
+          this.http.post<{ accepted: number }>(this.postUrl, item.reading).pipe(
+            tap(() => {
               this.remove(item.queueId);
-            } else {
-              this.updateItem(updated);
-            }
-            return EMPTY; // continue with next item
-          })
+              this.flushed$.next(item);
+            }),
+            catchError((err: HttpErrorResponse) => {
+              const updated = { ...item, attempts: item.attempts + 1 };
+              if (updated.attempts >= MAX_ATTEMPTS) {
+                this.remove(item.queueId);
+              } else {
+                this.updateItem(updated);
+              }
+              return EMPTY; // swallow error so concatMap continues with next item
+            })
+          )
         )
-      )
-    ).subscribe({
-      complete: () => {
-        this.flushStatus$.next('idle');
-        this.syncCount();
-        sub.unsubscribe();
-      },
-      error: () => {
-        this.flushStatus$.next('error');
-        sub.unsubscribe();
-      }
-    });
-
-    this.subs.add(sub);
+      ).subscribe({
+        complete: () => {
+          this.syncCount();
+          const remaining = this.load();
+          if (remaining.length > 0) {
+            // Some items failed — show error state and schedule an auto-retry
+            this.flushStatus$.next('error');
+            this.subs.add(
+              timer(RETRY_DELAY).subscribe(() => {
+                this.flushStatus$.next('idle');
+                this.flush();
+              })
+            );
+          } else {
+            this.flushStatus$.next('idle');
+          }
+        },
+        // Only reachable if an error escapes catchError — treated as fatal for this flush
+        error: () => {
+          this.syncCount();
+          this.flushStatus$.next('error');
+        }
+      })
+    );
   }
 
   /** Call this when SignalR reports the connection is back. */
   notifyOnline(): void {
-    // Small delay lets the connection stabilise before hammering the API
-    timer(800).subscribe(() => this.flush());
+    // Small delay lets the connection stabilise before hammering the API.
+    // Subscription is tracked so it is cancelled on service destroy.
+    this.subs.add(
+      timer(800).subscribe(() => this.flush())
+    );
   }
 
   /** Wipe the entire queue (e.g. user-initiated reset). */
   clear(): void {
     localStorage.removeItem(STORAGE_KEY);
     this.syncCount();
+    this.flushStatus$.next('idle');
   }
 
   getQueue(): QueuedReading[] {
@@ -164,7 +179,7 @@ export class OfflineQueueService implements OnDestroy {
   private save(queue: QueuedReading[]): void {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(queue));
-    } catch (e) {
+    } catch {
       // localStorage quota exceeded — drop oldest half and retry
       const half = queue.slice(Math.floor(queue.length / 2));
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(half)); } catch { /* give up */ }
