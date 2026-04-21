@@ -14,6 +14,9 @@ public class ReadingIngestionService(
     {
         foreach (var reading in readings)
         {
+            // Always override the sequence number.
+            reading.SequenceNumber = store.GetLastSequenceNumber() + 1;
+            
             // Assign server-side defaults if not provided
             if (reading.Id == Guid.Empty)
                 reading.Id = Guid.NewGuid();

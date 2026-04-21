@@ -1,4 +1,4 @@
-# Test sensor data objects for manual testing.
+// Test sensor data objects for manual testing.
 [
   [
     { "id": "00000000-0000-0000-0000-000000000000", "sequenceNumber": 1001, "timestamp": "0001-01-01T00:00:00Z", "temperature": 22.1, "humidity": 61.3, "co2Ppm": 582 },

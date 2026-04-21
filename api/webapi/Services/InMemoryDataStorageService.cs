@@ -7,17 +7,23 @@ namespace GreenGuard.WebApi.Services;
 /// </summary>
 public interface IDataStore
 {
+    /// <summary>Returns the most recent reading, or null if no readings have been added yet.</summary>
     SensorReading? GetLatest();
     void Add(SensorReading reading);
     /// <summary>Returns up to <paramref name="count"/> most recent readings, oldest first.</summary>
     IReadOnlyList<SensorReading> GetRecent(int count);
-    IReadOnlyList<Anomaly> GetRecentAnomalies(int count = 20);
+    /// <summary>Returns up to <paramref name="count"/> most recent anomalies, oldest first.</summary>
+    IReadOnlyList<Anomaly> GetRecentAnomalies(int count);
+    /// <summary>Adds an anomaly to the store.</summary>
     void AddAnomaly(Anomaly anomaly);
+    /// <summary>Returns the sequence number of the most recent reading.</summary>   
+    long GetLastSequenceNumber();
 }
 
 public class InMemoryDataStorageService : IDataStore
 {
     private readonly object _lock = new();
+    private long _lastSequenceNumber = 0;
     
     private static readonly IComparer<SensorReading> ByTimestamp =
         Comparer<SensorReading>.Create((a, b) =>
@@ -53,6 +59,7 @@ public class InMemoryDataStorageService : IDataStore
         lock (_lock)
         {
             _readings.Add(reading);
+            _lastSequenceNumber = reading.SequenceNumber;
         }
     }
 
@@ -80,5 +87,10 @@ public class InMemoryDataStorageService : IDataStore
             while (_anomalies.Count > MaxAnomalies)
                 _anomalies.Remove(_anomalies.Min!);
         }
+    }
+
+    public long GetLastSequenceNumber()
+    {
+        return _lastSequenceNumber;
     }
 }
