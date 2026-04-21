@@ -1,7 +1,7 @@
-# Greenhouse Monitor — Angular 17 Dashboard
+# Greenhouse Monitor Dashboard
 
 Real-time sensor monitoring dashboard built with Angular 17, TypeScript, RxJS, and Chart.js.
-Connects to the SensorApi .NET 8 backend via SignalR and REST.
+Connects to the GreenGuard.WebApi backend via SignalR and REST.
 
 ## Quick start
 
@@ -26,6 +26,7 @@ app/
     signalr.service.ts           SignalR hub wrapper (sensorReading$, anomaly$, connectionStatus$)
     readings-api.service.ts      REST calls — GET latest, POST readings, GET anomalies
     dashboard-state.service.ts   RxJS state — rolling window, Z-score detection, card derivation
+    offline-queue.service.ts.    Offline request caching service.
   app.component.*                Root component — single vm$ observable via combineLatest
   app.config.ts                  Angular providers
 environments/
@@ -98,7 +99,7 @@ Update `src/environments/environment.prod.ts` with your production API URL befor
 
 The offline queue has been implemented but isn't useful for how this web app works. The app 
 doesn't post any data to the web api. The only get requests are on init and when connectivity is 
-restored.
+restored. Given that, it isn't actually clear that it works and it probably should just be deleted.
 
 The online/reconnecting/offline indicator mostly works but there are some edge cases where it
 doesn't correctly go from online -> reconnecting -> online again.

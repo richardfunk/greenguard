@@ -4,11 +4,12 @@
 
 ## Endpoints
 
-| Method | Route | Description |
-|--------|-------|-------------|
-| `GET` | `/api/readings/latest` | Returns the most recent sensor reading |
+| Method | Route | Description                                      |
+|--------|-------|--------------------------------------------------|
+| `GET` | `/api/readings/latest` | Returns the most recent sensor reading           |
+| `GET` | `/api/readings` | Returns the 20 most recent sensor readings       |
 | `POST` | `/api/readings` | Ingests a single reading or an array of readings |
-| `GET` | `/api/anomalies` | Returns the 20 most recent anomalies |
+| `GET` | `/api/anomalies` | Returns the 20 most recent anomalies             |
 
 ### POST /api/readings
 
